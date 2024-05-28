@@ -5,13 +5,18 @@
     "dev": "tsx watch src/http/server.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@fastify/cors": "^9.0.1",
+    "@prisma/client": "^5.14.0",
     "@up-agencies/auth": "workspace:*",
+    "bcryptjs": "^2.4.3",
     "fastify": "^4.27.0",
     "fastify-type-provider-zod": "^1.2.0",
+    "prisma": "^5.14.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.12.6",
     "@up-agencies/eslint-config": "workspace:*",
     "@up-agencies/prettier": "workspace:*",
