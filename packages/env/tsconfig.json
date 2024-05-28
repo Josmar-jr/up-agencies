@@ -1,0 +1,6 @@
+{
+  "extends": "@up-agencies/tsconfig/library.json",
+  "include": [
+    "index.ts"
+  ]
+}
