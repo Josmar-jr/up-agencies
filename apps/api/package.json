@@ -7,7 +7,7 @@
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:studio": "pnpm env:load prisma studio",
     "env:load": "dotenv -e ../../.env --",
-    "vercel:build": "pnpm env:load prisma migrate deploy && pnpm env:load tsx watch src/http/server.ts"
+    "vercel:build": "pnpm env:load prisma migrate deploy"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
