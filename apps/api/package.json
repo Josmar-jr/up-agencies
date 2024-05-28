@@ -1,0 +1,23 @@
+{
+  "name": "@up-agencies/api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "dependencies": {
+    "@up-agencies/auth": "workspace:*"
+  },
+  "devDependencies": {
+    "@up-agencies/eslint-config": "workspace:*",
+    "@up-agencies/prettier": "workspace:*",
+    "@up-agencies/tsconfig": "workspace:*",
+    "@types/node": "^20.12.6",
+    "tsx": "^4.7.2"
+  },
+  "prettier": "@up-agencies/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@up-agencies/eslint-config/node"
+    ]
+  }
+}

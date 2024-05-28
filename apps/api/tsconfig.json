@@ -1,0 +1,6 @@
+{
+  "extends": "@up-agencies/tsconfig/node.json",
+  "include": [
+    "src/**/*"
+  ]
+}
