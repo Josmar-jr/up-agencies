@@ -2,16 +2,20 @@
   "name": "@up-agencies/api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/http/server.ts"
   },
   "dependencies": {
-    "@up-agencies/auth": "workspace:*"
+    "@fastify/cors": "^9.0.1",
+    "@up-agencies/auth": "workspace:*",
+    "fastify": "^4.27.0",
+    "fastify-type-provider-zod": "^1.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/node": "^20.12.6",
     "@up-agencies/eslint-config": "workspace:*",
     "@up-agencies/prettier": "workspace:*",
     "@up-agencies/tsconfig": "workspace:*",
-    "@types/node": "^20.12.6",
     "tsx": "^4.7.2"
   },
   "prettier": "@up-agencies/prettier",
