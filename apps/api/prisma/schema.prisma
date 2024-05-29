@@ -82,21 +82,22 @@ model Member {
 
 model Agency {
   id        String   @id @default(uuid())
-  addressId String?  @map("address_id")
   name      String
   email     String
-  site      String?
   cnpj      String   @unique
+  site      String?
   avatarUrl String?  @map("avatar_url")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  address AgencyAddress? @relation(fields: [addressId], references: [id])
-  userId  String         @map("user_id")
+  address   AgencyAddress? @relation(fields: [addressId], references: [id])
+  addressId String?        @map("address_id")
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String @map("owner_id")
 
   invites Invite[]
   members Member[]
-  User    User     @relation(fields: [userId], references: [id])
 
   @@map("agencies")
 }
