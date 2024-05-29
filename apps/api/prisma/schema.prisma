@@ -21,11 +21,27 @@ model User {
   avatarUrl    String? @map("avatar_url")
   phone        String
 
+  token       Token[]
   invite      Invite[]
   member_on   Member[]
   owns_agency Agency[]
 
   @@map("users")
+}
+
+enum TokenType {
+  PASSWORD_RECOVER
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  type      TokenType
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  @@map("tokens")
 }
 
 enum Role {
