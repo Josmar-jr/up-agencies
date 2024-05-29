@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "pnpm env:load tsx watch src/http/server.ts",
-    "build": "pnpm env:load tsx watch src/http/server.ts",
+    "build": "tsup src",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:studio": "pnpm env:load prisma studio",
     "env:load": "dotenv -e ../../.env --",
-    "vercel:build": "pnpm env:load prisma migrate deploy"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -19,10 +19,11 @@
     "@up-agencies/auth": "workspace:*",
     "@up-agencies/env": "workspace:*",
     "bcryptjs": "^2.4.3",
+    "dotenv-cli": "^7.4.1",
     "fastify": "^4.27.0",
+    "fastify-plugin": "^4.5.1",
     "fastify-type-provider-zod": "^1.2.0",
     "prisma": "^5.14.0",
-    "dotenv-cli": "^7.4.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
