@@ -9,12 +9,7 @@
         "^build"
       ],
       "outputs": [
-        ".next/**",
-        "!.next/cache/**",
         "dist/**"
-      ],
-      "dotEnv": [
-        ".env"
       ]
     },
     "lint": {
@@ -35,6 +30,10 @@
       ]
     }
   },
+  "globalEnv": [
+    "DATABASE_URL",
+    "JWT_SECRET"
+  ],
   "globalDotEnv": [
     ".env"
   ]

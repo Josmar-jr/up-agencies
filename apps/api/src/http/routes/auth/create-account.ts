@@ -23,7 +23,7 @@ export async function createAccount(app: FastifyInstance) {
             email: z.string().email(),
             cnpj: z.string(),
             site: z.string().optional(),
-            avatarUrl: z.string().optional(),
+            avatarUrl: z.string(),
           }),
         }),
       },
