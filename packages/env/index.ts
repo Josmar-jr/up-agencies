@@ -10,9 +10,12 @@ export const env = createEnv({
     RESEND_API_KEY: z.string(),
     FORGOT_PASSWORD_EXPIRATION_TIME_IN_MINUTE: z.string(),
   },
-  client: {},
+  client: {
+    NEXT_PUBLIC_BASE_URL: z.string().url(),
+  },
   shared: {},
   runtimeEnv: {
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     SERVER_PORT: process.env.SERVER_PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     JWT_SECRET: process.env.JWT_SECRET,
