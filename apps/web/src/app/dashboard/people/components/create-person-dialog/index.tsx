@@ -4,26 +4,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { type FormData, schema } from './shema'
-import { cn } from '@/lib/utils'
 
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form } from '@/components/ui/form'
 import { PersonalData } from './personal-data'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import { Card, CardContent } from '@/components/ui/card'
-import { Textarea } from '@/components/ui/textarea'
 
 import { DocumentData } from './document-data'
 import { AddresData } from './address-data'
@@ -31,24 +14,18 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { ChevronDown, Files, MapPin, Plus, User } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-const accordions = [
-  {
-    title: 'Documentos da pessoa',
-    element: <DocumentData />,
-  },
-  {
-    title: 'Endereço',
-    element: <AddresData />,
-  },
-]
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectPrimitiveTrigger,
+  SelectTrigger,
+} from '@/components/ui/select'
 
 export function CreatePersonDialog() {
   const form = useForm<FormData>({
@@ -65,11 +42,7 @@ export function CreatePersonDialog() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="top-[20%] max-w-2xl translate-y-[0] data-[state=closed]:slide-out-to-top-[0%]">
-        {/* <DialogHeader>
-          <DialogTitle>Criar pessoa</DialogTitle>
-        </DialogHeader> */}
-
+      <DialogContent className="top-[20%] max-w-3xl translate-y-[0] data-[state=closed]:slide-out-to-top-[20%]">
         <Form {...form}>
           <div>
             <Tabs defaultValue="person">
@@ -94,7 +67,7 @@ export function CreatePersonDialog() {
                 <DocumentData />
               </TabsContent>
               <TabsContent className="px-8 py-2" value="address">
-                <PersonalData />
+                <AddresData />
               </TabsContent>
             </Tabs>
             {/* <PersonalData />
@@ -141,13 +114,26 @@ export function CreatePersonDialog() {
           </div>
         </Form>
 
-        <DialogFooter className="border-t p-4">
+        <DialogFooter className="mt-6 border-t px-4 py-3">
           <Button variant="outline">Cancelar</Button>
           <div className="flex items-center">
             <Button className="rounded-r-none">Criar pessoa</Button>
-            <Button className="border-secondary-light rounded-l-none border-l">
-              <ChevronDown className="size-4" />
-            </Button>
+            <Select defaultValue="OFF_CREATOR_MODE">
+              <SelectPrimitiveTrigger asChild>
+                <Button className="rounded-l-none border-l border-secondary-light pl-2">
+                  <ChevronDown className="size-4" />
+                </Button>
+              </SelectPrimitiveTrigger>
+              <SelectContent>
+                <SelectItem value="ON_CREATOR_MODE">
+                  Salvar e adicionar mais pessoas
+                </SelectItem>
+                <SelectItem value="OFF_CREATOR_MODE">
+                  Salvar e fechar
+                </SelectItem>
+                <SelectItem value="CLEAR">Limpar todos os campos</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </DialogFooter>
       </DialogContent>

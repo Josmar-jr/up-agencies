@@ -1,30 +1,121 @@
-'use client'
-
-import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { Check } from 'lucide-react'
+import React from 'react'
 
+import { VariantProps, cva } from 'class-variance-authority'
+import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+
+export const boxItemTv = cva(
+  `flex items-center justify-center border-[1.5px] border-border bg-white transition-all 
+    focus:ring-2 focus:ring-blue-200 focus:ring-offset-1 focus:ring-offset-primary focus-visible:outline-none 
+    data-[state=checked]:hover:ring-2 data-[state=checked]:hover:ring-transparent data-[state=checked]:hover:ring-offset-1 data-[state=checked]:hover:ring-offset-primary
+    data-[state=checked]:border-primary
+  `,
+  {
+    variants: {
+      variant: {
+        squared: 'rounded data-[state=checked]:bg-primary',
+        rounded: 'rounded-full data-[state=checked]:bg-white',
+      },
+      size: {
+        sm: 'h-3 w-3',
+        md: 'h-[18px] w-[18px]',
+        lg: 'h-5 w-5',
+      },
+      disabled: {
+        true: 'border-border bg-slate-100 cursor-not-allowed data-[state=checked]:border-slate-400 data-[state=checked]:bg-white',
+      },
+    },
+    defaultVariants: {
+      variant: 'squared',
+      size: 'md',
+    },
+  }
+)
+
+export const boxIndicator = cva(
+  'grid place-items-center data-[state=checked]:animate-slide-in radix-state-unchecked:animate-slide-out',
+  {
+    variants: {
+      variant: {
+        squared: '',
+        rounded: '',
+      },
+      size: {
+        sm: 'h-3 w-3',
+        md: 'h-[18px] w-[18px]',
+        lg: 'h-5 w-5',
+      },
+      disabled: {
+        true: '',
+      },
+    },
+    defaultVariants: {
+      variant: 'squared',
+      size: 'md',
+    },
+  }
+)
+
+export const boxIndicatorMark = cva('', {
+  variants: {
+    variant: {
+      squared: 'text-bold self-center font-bold text-white',
+      rounded: 'h-full w-full rounded-full bg-primary',
+    },
+    size: {
+      sm: 'h-[10px] w-[10px]',
+      md: 'h-3 w-3',
+      lg: 'h-[14px] w-[14px]',
+    },
+    disabled: {
+      true: 'bg-opacity-50',
+    },
+  },
+  compoundVariants: [
+    {
+      variant: 'rounded',
+      size: 'sm',
+      class: 'h-2 w-2',
+    },
+  ],
+  defaultVariants: {
+    variant: 'squared',
+    size: 'md',
+  },
+})
+
+export type CheckboxPrimitiveProps = React.ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Root
+> &
+  VariantProps<typeof boxItemTv>
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
+  CheckboxPrimitiveProps
+>(({ className, variant, size, disabled, ...props }, ref) => (
   <CheckboxPrimitive.Root
     ref={ref}
-    className={cn(
-      'peer size-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground',
-      className
-    )}
+    className={cn(boxItemTv({ variant, size, disabled }), className)}
+    disabled={disabled}
     {...props}
   >
     <CheckboxPrimitive.Indicator
-      className={cn('flex items-center justify-center text-current')}
+      className={boxIndicator({ variant, size, disabled })}
     >
-      <Check className="h-4 w-4 pb-0.5" />
+      {variant === 'rounded' ? (
+        <div className={boxIndicatorMark({ variant, size, disabled })} />
+      ) : (
+        <Check
+          name="confirm-checkbox"
+          strokeWidth={3}
+          className={boxIndicatorMark({ variant, size })}
+        />
+      )}
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))
-Checkbox.displayName = CheckboxPrimitive.Root.displayName
+
+Checkbox.displayName = 'Checkbox'
 
 export { Checkbox }

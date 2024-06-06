@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 
 import { Navbar } from '@/components/navbar'
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable'
 
 export const metadata: Metadata = {
   title: 'Up Agencies | Dashboard',
@@ -13,10 +18,21 @@ export default function DashboardLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="bg-background-foreground grid h-screen w-full grid-rows-[auto_1fr] lg:grid-cols-[auto_1fr]">
-      <Navbar />
-
-      {children}
+    <div className="h-screen w-screen bg-background-foreground lg:grid-cols-[auto_1fr]">
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel
+          maxSize={24}
+          defaultSize={18}
+          minSize={14}
+          className="h-screen bg-secondary-lighter lg:flex"
+        >
+          <Navbar />
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel defaultSize={82} className="w-full">
+          {children}
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </div>
   )
 }

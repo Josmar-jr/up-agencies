@@ -32,10 +32,7 @@ export async function fetchApi<T = unknown>(
   }
 }
 
-export async function fetchAPI<T = unknown>(
-  url: string,
-  options?: RequestInit
-) {
+export async function fetchAPI(url: string, options?: RequestInit) {
   const token = cookies().get('up-agencies.token')?.value
 
   return fetch(`${env.NEXT_PUBLIC_BASE_URL}${url}`, {

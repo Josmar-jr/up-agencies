@@ -108,6 +108,7 @@ export function PersonalData() {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
+                    size="default"
                     variant={'outline'}
                     className={cn(
                       'w-full pl-3 text-left font-normal',

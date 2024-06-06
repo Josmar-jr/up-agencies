@@ -17,10 +17,10 @@ import { InviteMemberDialog } from './invite-member-dialog'
 
 export function Navbar() {
   return (
-    <aside className="inset-y z-20 hidden h-screen w-[275px] shrink-0 flex-col gap-3 border-r bg-secondary-lighter lg:flex">
+    <aside className="inset-y z-20 hidden h-screen w-full shrink-0 flex-col gap-3 bg-secondary-lighter lg:flex">
       <TeamNav />
 
-      <nav className="flex h-full w-[275px] flex-col justify-between overflow-y-auto p-4">
+      <nav className="flex h-full w-full flex-col justify-between overflow-y-auto p-4">
         <div className="flex flex-col gap-6">
           <div>
             <h3 className="mb-2 select-none whitespace-nowrap text-xs tracking-wider text-muted-foreground">

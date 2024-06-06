@@ -35,7 +35,7 @@ export function DocumentData() {
             <FormControl>
               <Input
                 autoComplete="new-password"
-                error={!!formState.errors.fullname?.message}
+                error={!!formState.errors.passport?.message}
                 placeholder="Insira o número de passaporte"
                 {...field}
               />
@@ -55,7 +55,8 @@ export function DocumentData() {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    variant={'outline'}
+                    size="default"
+                    variant="outline"
                     className={cn(
                       'w-full pl-3 text-left font-normal',
                       !field.value && 'text-muted-foreground'
@@ -100,7 +101,8 @@ export function DocumentData() {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    variant={'outline'}
+                    size="default"
+                    variant="outline"
                     className={cn(
                       'w-full pl-3 text-left font-normal',
                       !field.value && 'text-muted-foreground'

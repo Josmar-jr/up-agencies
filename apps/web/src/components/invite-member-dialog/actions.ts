@@ -2,7 +2,7 @@
 
 import { createServerAction } from 'zsa'
 import z from 'zod'
-import { fetchAPI, fetchApi } from '@/service/api-server'
+import { fetchAPI } from '@/service/api-server'
 
 interface Invate {
   inviteId: string
