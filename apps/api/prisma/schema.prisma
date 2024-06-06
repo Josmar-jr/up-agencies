@@ -90,19 +90,20 @@ model Agency {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  address   AgencyAddress? @relation(fields: [addressId], references: [id])
-  addressId String?        @map("address_id")
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?  @map("address_id")
 
   owner   User   @relation(fields: [ownerId], references: [id])
   ownerId String @map("owner_id")
 
   invites Invite[]
   members Member[]
+  people  Person[]
 
   @@map("agencies")
 }
 
-model AgencyAddress {
+model Address {
   id           String   @id @default(uuid())
   cep          String
   state        String
@@ -115,6 +116,42 @@ model AgencyAddress {
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   agencies Agency[]
+  peolple  Person[]
 
-  @@map("agencies_address")
+  @@map("address")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Person {
+  id        String  @id @default(uuid())
+  addressId String? @map("address_id")
+  agencyId  String  @map("agency_id")
+
+  name                           String
+  birthday                       DateTime?
+  gender                         Gender?
+  ticketQuoteCount               Int       @default(0) @map("ticket_quote_count")
+  ticketQuoteApproved            Int       @default(0) @map("ticket_quote_approved")
+  document                       String?
+  phone                          String?
+  email                          String?
+  generalRegistration            String?   @map("general_registration")
+  generalRegistrationIssuingBody String?   @map("general_registration_issuing_body")
+  passport                       String?
+  passportIssuedAt               DateTime? @map("passport_issued_at")
+  passportExpiresIn              DateTime? @map("passport_expires_in")
+  visa                           String?
+  visaExpiresIn                  DateTime? @map("visa_expires_in")
+  observation                    String?
+  rate                           Int?
+
+  address Address? @relation(fields: [addressId], references: [id])
+  agency  Agency   @relation(fields: [agencyId], references: [id])
+
+  @@unique([email, agencyId])
+  @@map("people")
 }

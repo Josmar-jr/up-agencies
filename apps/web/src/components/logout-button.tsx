@@ -8,7 +8,7 @@ export function LogoutButton() {
   const { signOut } = useAuth()
 
   return (
-    <DropdownMenuItem onSelect={signOut}>
+    <DropdownMenuItem className="flex" onSelect={signOut}>
       <LogOut className="size-4" />
       Sair da conta
     </DropdownMenuItem>

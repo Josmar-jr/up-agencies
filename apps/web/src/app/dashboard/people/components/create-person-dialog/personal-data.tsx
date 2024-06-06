@@ -39,7 +39,7 @@ export function PersonalData() {
     <div className="grid grid-cols-2 gap-3">
       <FormField
         control={form.control}
-        name="fullname"
+        name="personal.fullname"
         render={({ field, formState }) => (
           <FormItem>
             <FormLabel required>Nome completo</FormLabel>
@@ -47,7 +47,7 @@ export function PersonalData() {
             <FormControl>
               <Input
                 autoComplete="new-password"
-                error={!!formState.errors.fullname?.message}
+                error={!!formState.errors.personal?.fullname?.message}
                 placeholder="Insira o nome e sobrenome"
                 {...field}
               />
@@ -59,14 +59,14 @@ export function PersonalData() {
       />
       <FormField
         control={form.control}
-        name="phone"
+        name="personal.phone"
         render={({ field, formState }) => (
           <FormItem>
             <FormLabel>Telefone</FormLabel>
             <FormControl>
               <FormControl>
                 <PhoneInput
-                  error={!!formState.errors.phone?.message}
+                  error={!!formState.errors.personal?.phone?.message}
                   defaultCountry="BR"
                   placeholder="Entre com um número"
                   {...field}
@@ -80,7 +80,7 @@ export function PersonalData() {
       />
       <FormField
         control={form.control}
-        name="email"
+        name="personal.email"
         render={({ field, formState }) => (
           <FormItem>
             <FormLabel>Email</FormLabel>
@@ -88,7 +88,7 @@ export function PersonalData() {
             <FormControl>
               <Input
                 autoComplete="new-password"
-                error={!!formState.errors.email?.message}
+                error={!!formState.errors.personal?.email?.message}
                 placeholder="Insira o email"
                 {...field}
               />
@@ -100,7 +100,7 @@ export function PersonalData() {
       />
       <FormField
         control={form.control}
-        name="birthday"
+        name="personal.birthday"
         render={({ field }) => (
           <FormItem className="col-span-1">
             <FormLabel>Data de nascimento</FormLabel>
@@ -146,7 +146,7 @@ export function PersonalData() {
       />
       <FormField
         control={form.control}
-        name="gender"
+        name="personal.gender"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Gênero</FormLabel>

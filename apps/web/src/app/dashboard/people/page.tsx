@@ -100,6 +100,8 @@ const tasks = [
 ]
 
 export default function People() {
+  const data: string[] = []
+
   return (
     <div className="min-h-screen w-full bg-white">
       <header className="flex h-[49px] w-full items-center border-b px-4">
@@ -114,10 +116,13 @@ export default function People() {
         </div>
       </header>
 
-      <DataTable data={tasks} columns={columns} />
-      {/* <div className="h-[calc(100vh-49px)] p-6">
-        <Empty />
-      </div> */}
+      {data.length ? (
+        <DataTable data={tasks} columns={columns} />
+      ) : (
+        <div className="h-[calc(100vh-49px)] p-6">
+          <Empty />
+        </div>
+      )}
     </div>
   )
 }

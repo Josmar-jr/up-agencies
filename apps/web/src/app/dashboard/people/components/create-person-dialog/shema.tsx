@@ -27,11 +27,26 @@ const personalSchema = z.object({
 })
 
 const documentSchema = z.object({
+  CPForCNPJ: z.string().optional(),
+  RG: z.string().optional(),
+  issuingBodyRG: z.string().optional(),
   passport: z.string().optional(),
   passportIssuedAt: z.date(),
   passportExpiresAt: z.date(),
+  visa: z.string().optional(),
+  visaValidAt: z.date(),
 })
 
-export const schema = personalSchema.merge(documentSchema).merge(addressSchema)
+const annotationSchema = z.object({
+  description: z.string().optional(),
+})
+
+export const schema = z
+  .object({
+    personal: personalSchema,
+    document: documentSchema,
+    annotation: annotationSchema,
+  })
+  .merge(addressSchema)
 
 export type FormData = z.infer<typeof schema>

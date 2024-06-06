@@ -12,20 +12,29 @@ import { DocumentData } from './document-data'
 import { AddresData } from './address-data'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { ChevronDown, Files, MapPin, Plus, User } from 'lucide-react'
+import {
+  ChevronDown,
+  Files,
+  MapPin,
+  Plus,
+  ScrollText,
+  User,
+} from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectPrimitiveTrigger,
-  SelectTrigger,
+  SelectSeparator,
 } from '@/components/ui/select'
+import { AnnotationData } from './annotation-data'
 
 export function CreatePersonDialog() {
   const form = useForm<FormData>({
@@ -59,6 +68,10 @@ export function CreatePersonDialog() {
                   <MapPin className="mr-1 size-4" />
                   Endereço
                 </TabsTrigger>
+                <TabsTrigger value="annotation">
+                  <ScrollText className="mr-1 size-4" />
+                  Anotações
+                </TabsTrigger>
               </TabsList>
               <TabsContent className="px-8 py-2" value="person">
                 <PersonalData />
@@ -68,6 +81,9 @@ export function CreatePersonDialog() {
               </TabsContent>
               <TabsContent className="px-8 py-2" value="address">
                 <AddresData />
+              </TabsContent>
+              <TabsContent className="px-8 py-2" value="annotation">
+                <AnnotationData />
               </TabsContent>
             </Tabs>
             {/* <PersonalData />
@@ -115,22 +131,26 @@ export function CreatePersonDialog() {
         </Form>
 
         <DialogFooter className="mt-6 border-t px-4 py-3">
-          <Button variant="outline">Cancelar</Button>
+          <DialogClose asChild>
+            <Button variant="outline">Cancelar</Button>
+          </DialogClose>
           <div className="flex items-center">
             <Button className="rounded-r-none">Criar pessoa</Button>
             <Select defaultValue="OFF_CREATOR_MODE">
-              <SelectPrimitiveTrigger asChild>
+              <SelectPrimitiveTrigger className="group" asChild>
                 <Button className="rounded-l-none border-l border-secondary-light pl-2">
-                  <ChevronDown className="size-4" />
+                  <ChevronDown className="size-4 transition-transform duration-300 group-data-[state='open']:rotate-180" />
                 </Button>
               </SelectPrimitiveTrigger>
               <SelectContent>
+                <span className="block p-2 pb-2 text-xs">Ações</span>
                 <SelectItem value="ON_CREATOR_MODE">
                   Salvar e adicionar mais pessoas
                 </SelectItem>
                 <SelectItem value="OFF_CREATOR_MODE">
                   Salvar e fechar
                 </SelectItem>
+                <SelectSeparator />
                 <SelectItem value="CLEAR">Limpar todos os campos</SelectItem>
               </SelectContent>
             </Select>

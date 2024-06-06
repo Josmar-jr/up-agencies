@@ -6,13 +6,15 @@ import { fetchApi } from '@/service/api-server'
 import type { User } from '@/service/schema/user'
 
 const getMe = cache(async () => {
-  return await fetchApi<User>('/me', {
-    cache: 'force-cache',
+  return await fetchApi<{ user: User }>('/me', {
+    next: {
+      tags: ['me'],
+    },
   })
 })
 
 export default async function Account() {
-  const user = await getMe()
+  const { user } = await getMe()
 
   return (
     <Card className="max-w-[760px]">

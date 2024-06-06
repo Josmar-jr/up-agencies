@@ -27,7 +27,7 @@ export async function TeamNav() {
       <DropdownMenu>
         <DropdownMenuTrigger
           type="button"
-          className="hover:bg-secondary-lighter focus-visible:bg-secondary-lighter flex h-[48px] w-full items-center gap-3 px-4 outline-none"
+          className="flex h-[48px] w-full items-center gap-3 px-4 outline-none hover:bg-secondary-lighter focus-visible:bg-secondary-lighter"
         >
           <Avatar className="size-7 rounded-md">
             <AvatarFallback>
@@ -66,7 +66,7 @@ export async function TeamNav() {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuGroup>
+          <DropdownMenuGroup className="*:flex">
             <DropdownMenuItem asChild>
               <Link href="/dashboard/account/profile">
                 <UserCog />

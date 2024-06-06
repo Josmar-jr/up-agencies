@@ -23,6 +23,7 @@ export async function getProfile(app: FastifyInstance) {
                 name: z.string().nullable(),
                 email: z.string().email(),
                 avatarUrl: z.string().url().nullable(),
+                phone: z.string(),
               }),
             }),
           },

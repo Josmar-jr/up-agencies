@@ -24,6 +24,7 @@ import { getMembers } from './routes/members/get-members'
 import { sendInvites } from './routes/invites/send-invites'
 import { acceptInvite } from './routes/invites/accept-invite'
 import { getInvites } from './routes/invites/get-invites'
+import { updateUserAccount } from './routes/auth/update-account'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -67,6 +68,7 @@ app.register(authenticateWithPassword)
 app.register(getProfile)
 app.register(requestPasswordRecover)
 app.register(updatePassword)
+app.register(updateUserAccount)
 
 // Agency
 app.register(getAgency)
