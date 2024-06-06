@@ -6,9 +6,16 @@ export const api = axios.create({
   baseURL: env.NEXT_PUBLIC_BASE_URL,
 })
 
-export async function fetchApiClient<T>(url: string, options?: RequestInit) {
-  const { 'up-agencies.token': token } = parseCookies()
+const { 'up-agencies.token': token } = parseCookies()
 
+export const apiProtected = axios.create({
+  baseURL: env.NEXT_PUBLIC_BASE_URL,
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+
+export async function fetchApiClient<T>(url: string, options?: RequestInit) {
   const response = await fetch(`${env.NEXT_PUBLIC_BASE_URL}${url}`, {
     headers: {
       ...(token && { Authorization: `Bearer ${token}` }),

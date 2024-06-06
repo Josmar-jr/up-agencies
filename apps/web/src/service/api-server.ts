@@ -7,15 +7,42 @@ export async function fetchApi<T = unknown>(
 ) {
   const token = cookies().get('up-agencies.token')?.value
 
-  const response = await fetch(`${env.NEXT_PUBLIC_BASE_URL}${url}`, {
+  try {
+    const response = await fetch(`${env.NEXT_PUBLIC_BASE_URL}${url}`, {
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+        'Content-Type': 'application/json',
+      },
+      ...options,
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+
+      const { message } = JSON.parse(error)
+
+      throw new Error(message || `HTTP error! status: ${response.status}`)
+    }
+
+    const data: T = await response.json()
+
+    return data
+  } catch (err) {
+    throw new Error(`err`)
+  }
+}
+
+export async function fetchAPI<T = unknown>(
+  url: string,
+  options?: RequestInit
+) {
+  const token = cookies().get('up-agencies.token')?.value
+
+  return fetch(`${env.NEXT_PUBLIC_BASE_URL}${url}`, {
     headers: {
       ...(token && { Authorization: `Bearer ${token}` }),
       'Content-Type': 'application/json',
     },
     ...options,
   })
-
-  const data: T = await response.json()
-
-  return data
 }

@@ -18,7 +18,6 @@ export const auth = fastifyPlugin(async (app: FastifyInstance) => {
 
     request.getUserMembership = async (_?: string) => {
       const userId = await request.getCurrentUserId()
-      console.log({ userId })
 
       const member = await prisma.member.findFirst({
         where: {

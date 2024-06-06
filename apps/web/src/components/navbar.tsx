@@ -13,13 +13,11 @@ import {
 import { ActiveLink } from './active-link'
 
 import { TeamNav } from './team-nav'
-import { Separator } from './ui/separator'
-import { Button } from './ui/button'
 import { InviteMemberDialog } from './invite-member-dialog'
 
 export function Navbar() {
   return (
-    <aside className="bg-secondary-lighter inset-y z-20 hidden h-screen w-[275px] shrink-0 flex-col gap-3 border-r lg:flex">
+    <aside className="inset-y z-20 hidden h-screen w-[275px] shrink-0 flex-col gap-3 border-r bg-secondary-lighter lg:flex">
       <TeamNav />
 
       <nav className="flex h-full w-[275px] flex-col justify-between overflow-y-auto p-4">

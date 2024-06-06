@@ -16,7 +16,7 @@ export async function sendInvites(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .post(
-      '/agencies/invites',
+      '/invites',
       {
         schema: {
           tags: ['Invites'],
@@ -53,6 +53,10 @@ export async function sendInvites(app: FastifyInstance) {
         const { emails, role } = request.body
 
         const invites = []
+
+        if (emails.length === 0) {
+          throw new BadRequestError(`No email received`)
+        }
 
         for (const email of emails) {
           const inviteWithSameEmail = await prisma.invite.findUnique({
