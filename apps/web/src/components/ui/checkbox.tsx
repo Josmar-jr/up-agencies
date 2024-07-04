@@ -7,8 +7,7 @@ import { cn } from '@/lib/utils'
 
 export const boxItemTv = cva(
   `flex items-center justify-center border-[1.5px] border-border bg-white transition-all 
-    focus:ring-2 focus:ring-blue-200 focus:ring-offset-1 focus:ring-offset-primary focus-visible:outline-none 
-    data-[state=checked]:hover:ring-2 data-[state=checked]:hover:ring-transparent data-[state=checked]:hover:ring-offset-1 data-[state=checked]:hover:ring-offset-primary
+    focus:ring-2 focus:ring-blue-200 focus:ring-offset-1 focus:ring-offset-primary focus-visible:outline-none
     data-[state=checked]:border-primary
   `,
   {
@@ -52,7 +51,7 @@ export const boxIndicator = cva(
     },
     defaultVariants: {
       variant: 'squared',
-      size: 'md',
+      size: 'sm',
     },
   }
 )
@@ -81,7 +80,7 @@ export const boxIndicatorMark = cva('', {
   ],
   defaultVariants: {
     variant: 'squared',
-    size: 'md',
+    size: 'sm',
   },
 })
 

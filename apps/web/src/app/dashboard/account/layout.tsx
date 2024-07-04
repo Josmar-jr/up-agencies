@@ -5,28 +5,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { getInitialsFromFullName } from '@/utils/formatters'
 
-import { cache } from 'react'
-import { fetchApi } from '@/service/api-server'
-import type { User } from '@/service/schema/user'
 import { cn } from '@/lib/utils'
+import { getProfile } from '@/http/auth/get-profile'
 
 export const metadata: Metadata = {
   title: 'Up Agencies | Dashboard',
   description: 'Up Agencies',
 }
 
-const getMe = cache(async () => {
-  return await fetchApi<User>('/me', {
-    cache: 'force-cache',
-  })
-})
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const user = await getMe()
+  const { user } = await getProfile()
 
   return (
     <div
@@ -38,7 +30,10 @@ export default async function RootLayout({
     >
       <div className="flex gap-2 lg:col-span-2">
         <Avatar className="size-12">
-          <AvatarImage src={user?.avatarUrl} alt={user?.name ?? ''} />
+          <AvatarImage
+            src={user?.avatarUrl ?? undefined}
+            alt={user?.name ?? ''}
+          />
           <AvatarFallback>
             {user?.name && getInitialsFromFullName(user.name)}
           </AvatarFallback>

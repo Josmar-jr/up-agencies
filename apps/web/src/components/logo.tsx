@@ -15,6 +15,7 @@ export function Logo({ className }: LogoProps) {
         'flex flex-shrink-0 flex-grow items-center gap-2 lg:flex-grow-0',
         className
       )}
+      tabIndex={1}
     >
       <span className="grid size-9 place-content-center rounded-sm bg-primary">
         <Plane className="size-4 fill-white text-white" />

@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { ButtonProps, buttonVariants } from '@/components/ui/button'
+import Link, { LinkProps } from 'next/link'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
@@ -36,33 +37,51 @@ PaginationItem.displayName = 'PaginationItem'
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
+  className?: string
+  children: React.ReactNode // Add children prop here
 } & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'a'>
+  LinkProps
 
 const PaginationLink = ({
   className,
   isActive,
+  disabled = false,
   size = 'icon',
   ...props
-}: PaginationLinkProps) => (
-  <a
-    aria-current={isActive ? 'page' : undefined}
-    className={cn(
-      buttonVariants({
-        variant: isActive ? 'outline' : 'ghost',
-        size,
-      }),
-      className
-    )}
-    {...props}
-  />
-)
+}: PaginationLinkProps) =>
+  disabled ? (
+    <span
+      className={cn(
+        buttonVariants({
+          variant: 'ghost', // Ou qualquer outro estilo que indique que está desabilitado
+          size,
+        }),
+        className
+      )}
+      {...props}
+    />
+  ) : (
+    <Link
+      aria-current={isActive ? 'page' : undefined}
+      className={cn(
+        buttonVariants({
+          variant: isActive ? 'outline' : 'ghost',
+          size,
+        }),
+        className
+      )}
+      {...props}
+    />
+  )
 PaginationLink.displayName = 'PaginationLink'
+
+type PaginationExcludeChildrenProps = Omit<PaginationLinkProps, 'children'>
 
 const PaginationPrevious = ({
   className,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+}: PaginationExcludeChildrenProps) => (
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
@@ -70,7 +89,7 @@ const PaginationPrevious = ({
     {...props}
   >
     <ChevronLeft className="h-4 w-4" />
-    <span>Previous</span>
+    <span className="sr-only">Previous</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
@@ -78,15 +97,17 @@ PaginationPrevious.displayName = 'PaginationPrevious'
 const PaginationNext = ({
   className,
   ...props
-}: React.ComponentProps<typeof PaginationLink>) => (
+}: PaginationExcludeChildrenProps) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
     className={cn('gap-1 pr-2.5', className)}
     {...props}
   >
-    <span>Next</span>
-    <ChevronRight className="h-4 w-4" />
+    <div>
+      <span className="sr-only">Next</span>
+      <ChevronRight className="h-4 w-4" />
+    </div>
   </PaginationLink>
 )
 PaginationNext.displayName = 'PaginationNext'

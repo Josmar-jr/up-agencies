@@ -1,4 +1,4 @@
-import { ChevronDown, DollarSign, Palette, UserCog } from 'lucide-react'
+import { ChevronDown, DollarSign, LogOut, Palette, UserCog } from 'lucide-react'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import type { Agency } from '@/service/schema/agency'
 import { fetchApi } from '@/service/api-server'
@@ -15,7 +15,6 @@ import {
 } from './ui/dropdown-menu'
 
 import Link from 'next/link'
-import { LogoutButton } from './logout-button'
 
 export async function TeamNav() {
   const { agency } = await fetchApi<{ agency: Agency }>('/agency')
@@ -87,7 +86,12 @@ export async function TeamNav() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <LogoutButton />
+          <DropdownMenuItem className="flex" asChild>
+            <a href="/api/auth/sign-out">
+              <LogOut className="size-4" />
+              Sair da conta
+            </a>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       <div className="absolute right-4 top-1/2 -translate-y-4">

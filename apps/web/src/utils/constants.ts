@@ -1,16 +1,18 @@
-export const GENDERS = {
-  cisgenderMan: "Homem cisgênero",
-  cisgenderWoman: "Mulher cisgênero",
-  transgenderMan: "Homem transgênero",
-  transgenderWoman: "Mulher transgênero",
-  nonBinary: "Não binário",
-  other: "Outro",
-  preferNotToSpecify: "Preferir não especificar",
-};
+export const SEXO = {
+  MALE: 'Masculino',
+  FEMALE: 'Feminino',
+}
 
 export const PERSON_TYPES = {
-  passenger: "Passageiro",
-  client: "Cliente",
-  supplier: "Fornecedor",
-  representative: "Representante",
-};
+  PASSENGER: 'Passageiro',
+  CLIENT: 'Cliente',
+  SUPPLIER: 'Fornecedor',
+  REPRESENTATIVE: 'Representante',
+} as const
+
+export enum PersonType {
+  CLIENT = 'CLIENT',
+  PASSENGER = 'PASSENGER',
+  SUPPLIER = 'SUPPLIER',
+  REPRESENTATIVE = 'REPRESENTATIVE',
+}

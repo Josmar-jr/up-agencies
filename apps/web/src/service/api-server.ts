@@ -28,6 +28,7 @@ export async function fetchApi<T = unknown>(
 
     return data
   } catch (err) {
+    console.log(err)
     throw new Error(`err`)
   }
 }

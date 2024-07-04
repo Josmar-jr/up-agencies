@@ -26,6 +26,9 @@ import { acceptInvite } from './routes/invites/accept-invite'
 import { getInvites } from './routes/invites/get-invites'
 import { updateUserAccount } from './routes/auth/update-account'
 import { createPerson } from './routes/people/create-person'
+import { listPeople } from './routes/people/list-people'
+import { getPersonById } from './routes/people/get-people-by-id'
+import { deletePeople } from './routes/people/delete-people'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -85,6 +88,9 @@ app.register(getInvites)
 
 // People
 app.register(createPerson)
+app.register(deletePeople)
+app.register(listPeople)
+app.register(getPersonById)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running! 🔥')

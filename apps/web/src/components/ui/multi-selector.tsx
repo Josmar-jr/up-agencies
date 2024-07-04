@@ -39,6 +39,7 @@ interface MultipleSelectorProps {
   emptyIndicator?: React.ReactNode
   /** Debounce time for async search. Only work with `onSearch`. */
   delay?: number
+  error?: boolean
   /**
    * Only work with `onSearch` prop. Trigger search when `onFocus`.
    * For example, when user click on the input, it will trigger the search to get initial options.
@@ -138,12 +139,6 @@ function isOptionsExist(groupOption: GroupOption, targetOption: Option[]) {
   return false
 }
 
-/**
- * The `CommandEmpty` of shadcn/ui will cause the cmdk empty not rendering correctly.
- * So we create one and copy the `Empty` implementation from `cmdk`.
- *
- * @reference: https://github.com/hsuanyi-chou/shadcn-ui-expansions/issues/34#issuecomment-1949561607
- **/
 const CommandEmpty = forwardRef<
   HTMLDivElement,
   React.ComponentProps<typeof CommandPrimitive.Empty>
@@ -194,6 +189,7 @@ const MultipleSelector = React.forwardRef<
       triggerSearchOnFocus = false,
       commandProps,
       inputProps,
+      error,
     }: MultipleSelectorProps,
     ref: React.Ref<MultipleSelectorRef>
   ) => {
@@ -350,8 +346,8 @@ const MultipleSelector = React.forwardRef<
       }
 
       return (
-        <CommandEmpty className="flex flex-col items-center justify-center text-muted-foreground">
-          <PackageOpen className="size-12 stroke-[1.5]" />
+        <CommandEmpty className="flex flex-col items-center justify-center text-secondary-light">
+          <PackageOpen className="size-8 stroke-[1]" />
           {emptyIndicator}
         </CommandEmpty>
       )
@@ -398,10 +394,12 @@ const MultipleSelector = React.forwardRef<
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <div
           className={cn(
-            'min-h-10 rounded-md border border-input text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+            'min-h-10 rounded-md border border-input text-sm focus-within:ring-2 focus-within:ring-violet-200 focus-within:ring-offset-1 focus-within:ring-offset-ring',
             {
               'px-3 py-2': selected.length !== 0,
               'cursor-text': !disabled && selected.length !== 0,
+              'border-destructive focus-within:border-border focus-within:ring-red-200 focus-within:ring-offset-destructive':
+                error,
             },
             className
           )}
@@ -445,7 +443,7 @@ const MultipleSelector = React.forwardRef<
                     }}
                     onClick={() => handleUnselect(option)}
                   >
-                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                    <X className="h-3 w-3 text-secondary-lighter hover:text-foreground" />
                   </button>
                 </Badge>
               )

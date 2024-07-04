@@ -34,7 +34,7 @@ export function Navbar() {
                 </ActiveLink>
               </li>
               <li>
-                <ActiveLink href="#">
+                <ActiveLink href="/dashboard/quotes">
                   <FileBadge className="size-5" />
                   Cotações
                 </ActiveLink>

@@ -2,7 +2,6 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 import { cookies } from 'next/headers'
 import { decrypt } from './lib/session'
-import dayjs from 'dayjs'
 
 const protectedRoutes = ['/dashboard']
 const publicRoutes = ['/sign-in', '/sing-up', '/']

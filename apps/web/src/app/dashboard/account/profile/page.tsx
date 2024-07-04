@@ -1,20 +1,11 @@
+'use client'
 import { Card, CardContent } from '@/components/ui/card'
 
 import BasicData from './components/basic-data'
-import { cache } from 'react'
-import { fetchApi } from '@/service/api-server'
-import type { User } from '@/service/schema/user'
-
-const getMe = cache(async () => {
-  return await fetchApi<{ user: User }>('/me', {
-    next: {
-      tags: ['me'],
-    },
-  })
-})
+import { getProfile } from '@/http/auth/get-profile'
 
 export default async function Account() {
-  const { user } = await getMe()
+  const { user } = await getProfile()
 
   return (
     <Card className="max-w-[760px]">

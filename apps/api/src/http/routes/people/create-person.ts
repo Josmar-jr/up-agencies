@@ -22,6 +22,14 @@ export async function createPerson(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           body: z.object({
             name: z.string(),
+            personType: z.array(
+              z.union([
+                z.literal('CLIENT'),
+                z.literal('PASSENGER'),
+                z.literal('SUPPLIER'),
+                z.literal('REPRESENTATIVE'),
+              ])
+            ),
             email: z.string().email().optional(),
             phone: z.string().optional(),
             birthday: z
@@ -74,7 +82,7 @@ export async function createPerson(app: FastifyInstance) {
               })
               .optional(),
             observation: z.string().optional(),
-            rate: z.number().int().optional(),
+            rate: z.number().int().positive().optional(),
           }),
           response: {
             201: z.object({
@@ -110,6 +118,7 @@ export async function createPerson(app: FastifyInstance) {
         const { agency } = await request.getUserMembership()
         const {
           name,
+          personType,
           email,
           birthday,
           document,
@@ -142,6 +151,7 @@ export async function createPerson(app: FastifyInstance) {
         const newPerson = await prisma.person.create({
           data: {
             name,
+            personType: personType.join(','),
             email,
             birthday,
             document,

@@ -127,21 +127,14 @@ enum Gender {
   FEMALE
 }
 
-enum PERSON {
-  CLIENT
-  PASSENGER
-  SUPPLIER
-  REPRESENTATIVE
-}
-
 model Person {
   id        String  @id @default(uuid())
   addressId String? @map("address_id")
   agencyId  String  @map("agency_id")
-  authorId  String? @map("user_id")
+  authorId  String  @map("user_id")
 
   name                           String
-  personType                     PERSON?
+  personType                     String?
   birthday                       DateTime?
   gender                         Gender?
   ticketQuoteCount               Int       @default(0) @map("ticket_quote_count")
@@ -161,7 +154,7 @@ model Person {
 
   address Address? @relation(fields: [addressId], references: [id])
   agency  Agency   @relation(fields: [agencyId], references: [id])
-  author  User?    @relation(fields: [authorId], references: [id])
+  author  User     @relation(fields: [authorId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

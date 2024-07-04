@@ -35,8 +35,6 @@ export async function acceptInvite(app: FastifyInstance) {
         },
       })
 
-      const currentDate: string = Date.now().toString()
-
       if (!invite) {
         throw new BadRequestError('Invite not found or expired.')
       }
