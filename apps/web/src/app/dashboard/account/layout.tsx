@@ -34,7 +34,7 @@ export default async function RootLayout({
             src={user?.avatarUrl ?? undefined}
             alt={user?.name ?? ''}
           />
-          <AvatarFallback>
+          <AvatarFallback name={user.name}>
             {user?.name && getInitialsFromFullName(user.name)}
           </AvatarFallback>
         </Avatar>

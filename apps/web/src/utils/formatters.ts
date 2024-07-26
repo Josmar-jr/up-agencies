@@ -88,3 +88,11 @@ export function transformArrayToEnum<T = string>(
     return obj
   }, {})
 }
+
+export function formatToBRL(amountInCents: number): string {
+  const amountInReais = amountInCents / 100
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(amountInReais)
+}

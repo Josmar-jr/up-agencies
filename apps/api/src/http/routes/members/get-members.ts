@@ -21,8 +21,8 @@ export async function getMembers(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           querystring: z.object({
             search: z.string().optional(),
-            page: z.coerce.number().int().min(1).default(1),
-            pageSize: z.number().int().min(1).max(100).default(10),
+            page: z.coerce.number().int().min(1).optional(),
+            pageSize: z.coerce.number().int().min(1).max(100).optional(),
           }),
           response: {
             200: z.object({
@@ -36,11 +36,10 @@ export async function getMembers(app: FastifyInstance) {
                   avatarUrl: z.string().url().nullable(),
                 })
               ),
-              pagination: z.object({
-                currentPage: z.number(),
-                pageSize: z.number(),
-                pageCount: z.number(),
-                totalCount: z.number(),
+              meta: z.object({
+                currentPage: z.number().int().positive().nullable(),
+                pages: z.number().int().positive().nullable(),
+                totalCount: z.number().int().positive(),
               }),
             }),
           },
@@ -59,8 +58,6 @@ export async function getMembers(app: FastifyInstance) {
             `You're not allowed to see organization members.`
           )
         }
-
-        const skip = (page - 1) * pageSize
 
         const totalCount = await prisma.member.count({
           where: {
@@ -84,7 +81,13 @@ export async function getMembers(app: FastifyInstance) {
           },
         })
 
-        const totalPages = Math.ceil(totalCount / pageSize)
+        let skip = undefined
+        let totalPages = undefined
+
+        if (page && pageSize) {
+          skip = (page - 1) * pageSize
+          totalPages = Math.ceil(totalCount / pageSize)
+        }
 
         const members = await prisma.member.findMany({
           select: {
@@ -135,14 +138,15 @@ export async function getMembers(app: FastifyInstance) {
           }
         )
 
+        const meta = {
+          currentPage: page ?? null,
+          pages: totalPages ?? null,
+          totalCount,
+        }
+
         return reply.send({
           members: membersWithRoles,
-          pagination: {
-            currentPage: page,
-            totalCount,
-            pageSize,
-            pageCount: totalPages,
-          },
+          meta,
         })
       }
     )

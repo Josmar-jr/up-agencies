@@ -29,10 +29,11 @@ export async function TeamNav() {
           className="flex h-[48px] w-full items-center gap-3 px-4 outline-none hover:bg-secondary-lighter focus-visible:bg-secondary-lighter"
         >
           <Avatar className="size-7 rounded-md">
-            <AvatarFallback>
-              <AvatarFallback className="rounded-md bg-gradient-to-br from-purple-500 via-pink-500 to-yellow-500">
-                {firstLetter}
-              </AvatarFallback>
+            <AvatarFallback
+              name={agency.name}
+              className="rounded-md bg-gradient-to-br from-purple-500 via-pink-500 to-yellow-500"
+            >
+              {firstLetter}
             </AvatarFallback>
           </Avatar>
 
@@ -51,10 +52,11 @@ export async function TeamNav() {
         >
           <DropdownMenuLabel className="flex items-center gap-3 font-normal">
             <Avatar className="size-8 rounded-md">
-              <AvatarFallback>
-                <AvatarFallback className="rounded-md bg-gradient-to-br from-purple-500 via-pink-500 to-yellow-500">
-                  {firstLetter}
-                </AvatarFallback>
+              <AvatarFallback
+                name={agency.name}
+                className="rounded-md bg-gradient-to-br from-purple-500 via-pink-500 to-yellow-500"
+              >
+                {firstLetter}
               </AvatarFallback>
             </Avatar>
             <div className="flex flex-col space-y-1">

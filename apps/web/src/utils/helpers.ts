@@ -105,3 +105,34 @@ export function getStateByUF(uf: string): string {
 
   return states[uf] || 'State not found'
 }
+
+export function getLuminance(hexColor: string) {
+  const rgb = hexToRgb(hexColor)
+  const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255
+  return luminance
+}
+
+function hexToRgb(hex: string) {
+  // Remove o símbolo de hash se ele estiver presente
+  hex = hex.replace(/^#/, '')
+
+  // Converte de três dígitos para seis dígitos
+  if (hex.length === 3) {
+    hex = hex
+      .split('')
+      .map((hex) => hex + hex)
+      .join('')
+  }
+
+  const bigint = parseInt(hex, 16)
+  const r = (bigint >> 16) & 255
+  const g = (bigint >> 8) & 255
+  const b = bigint & 255
+
+  return { r, g, b }
+}
+
+export function contrast(color: string) {
+  const luminance = getLuminance(color)
+  return luminance > 0.5 ? '#18181b' : '#FFFFFF'
+}

@@ -4,8 +4,12 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Info } from 'lucide-react'
+import { QuotesBoard } from './quotes-board'
+import { getManyQuotes } from '@/http/quotes/list-quotes'
 
-export default function Quotes() {
+export default async function Quotes() {
+  const { quotes } = await getManyQuotes()
+
   return (
     <div className="min-h-screen w-full bg-white">
       <header className="flex h-[49px] w-full items-center border-b px-4">
@@ -19,6 +23,8 @@ export default function Quotes() {
           </Tooltip>
         </div>
       </header>
+
+      <QuotesBoard quotes={quotes} />
     </div>
   )
 }

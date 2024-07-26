@@ -26,6 +26,7 @@ model User {
   member_on   Member[]
   owns_agency Agency[]
   person      Person[]
+  quote       Quote[]
 
   @@map("users")
 }
@@ -71,11 +72,12 @@ model Invite {
 model Member {
   id String @id @default(uuid())
 
-  role     Role   @default(MEMBER)
-  agency   Agency @relation(fields: [agencyId], references: [id])
-  agencyId String @map("agency_id")
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String @map("user_id")
+  role           Role    @default(MEMBER)
+  agency         Agency  @relation(fields: [agencyId], references: [id])
+  agencyId       String  @map("agency_id")
+  user           User    @relation(fields: [userId], references: [id])
+  userId         String  @map("user_id")
+  quotesAssigned Quote[] @relation("QuoteAssignees")
 
   @@unique([agencyId, userId])
   @@map("members")
@@ -100,6 +102,7 @@ model Agency {
   invites Invite[]
   members Member[]
   people  Person[]
+  quotes  Quote[]
 
   @@map("agencies")
 }
@@ -117,7 +120,7 @@ model Address {
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   agencies Agency[]
-  peolple  Person[]
+  people   Person[]
 
   @@map("address")
 }
@@ -155,10 +158,48 @@ model Person {
   address Address? @relation(fields: [addressId], references: [id])
   agency  Agency   @relation(fields: [agencyId], references: [id])
   author  User     @relation(fields: [authorId], references: [id])
+  quotes  Quote[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([email, agencyId])
   @@map("people")
+}
+
+enum QuoteStatus {
+  AWAITING
+  QUOTING
+  AWAITING_CLIENT
+  APPROVED
+  REJECTED
+}
+
+model Quote {
+  id      String      @id @default(uuid())
+  title   String
+  content String?
+  status  QuoteStatus @default(AWAITING)
+  order   Int         @default(0)
+
+  priceInCents Int @default(0) @map("price_in_cents")
+
+  salesChannel String? @map("sales_channel")
+  totalValue   Float   @default(0.0) @map("total_value")
+
+  assignees Member[] @relation("QuoteAssignees")
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
+
+  agency   Agency @relation(fields: [agencyId], references: [id])
+  agencyId String @map("agency_id")
+
+  client   Person? @relation(fields: [clientId], references: [id])
+  clientId String? @map("client_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("quotes")
 }

@@ -18,7 +18,7 @@ export async function listPeople(app: FastifyInstance) {
       {
         schema: {
           tags: ['Invites'],
-          summary: 'Get all organization invites',
+          summary: 'Get list people',
           security: [{ bearerAuth: [] }],
           querystring: personQueryParamsSchema,
           response: {

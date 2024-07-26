@@ -29,6 +29,9 @@ import { createPerson } from './routes/people/create-person'
 import { listPeople } from './routes/people/list-people'
 import { getPersonById } from './routes/people/get-people-by-id'
 import { deletePeople } from './routes/people/delete-people'
+import { createQuote } from './routes/quotes/create-quote'
+import { listQuotes } from './routes/quotes/list-quotes'
+import { moveQuote } from './routes/quotes/move-quote'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -91,6 +94,11 @@ app.register(createPerson)
 app.register(deletePeople)
 app.register(listPeople)
 app.register(getPersonById)
+
+// Quote
+app.register(createQuote)
+app.register(listQuotes)
+app.register(moveQuote)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running! 🔥')
