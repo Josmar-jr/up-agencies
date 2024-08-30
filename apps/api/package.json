@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "pnpm env:load tsx watch src/http/server.ts",
-    "build": "pnpm prisma:generate && tsup src",
+    "build": "pnpm prisma:generate && tsup src/http/server.ts --out-dir dist/http",
     "start": "pnpm env:load tsx watch dist/http/server.js",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:deploy": "pnpm env:load prisma migrate deploy",
