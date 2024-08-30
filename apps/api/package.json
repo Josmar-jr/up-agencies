@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "pnpm env:load tsx watch src/http/server.ts",
-    "build": "pnpm prisma:generate && tsup src/http/server.ts --out-dir dist/http",
+    "build": "tsup src/http/server.ts --out-dir dist/http",
     "start": "pnpm env:load tsx watch dist/http/server.js",
+    "db:generate": "npm env:load prisma generate",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:deploy": "pnpm env:load prisma migrate deploy",
     "db:studio": "pnpm env:load prisma studio",
@@ -36,7 +37,7 @@
     "@up-agencies/prettier": "workspace:*",
     "@up-agencies/tsconfig": "workspace:*",
     "prisma": "^5.16.1",
-    "tsx": "^4.7.2"
+    "tsx": "^4.11.0"
   },
   "prettier": "@up-agencies/prettier",
   "eslintConfig": {
