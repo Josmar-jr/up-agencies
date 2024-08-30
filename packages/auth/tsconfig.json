@@ -1,5 +1,5 @@
 {
-  "extends": "@agencies-up/tsconfig/library.json",
+  "extends": "@up-agencies/tsconfig/library.json",
   "include": [
     "src/**/*"
   ]

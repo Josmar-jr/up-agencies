@@ -8,7 +8,7 @@ import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/sessions/password',
+    '/auth/sign-in',
     {
       schema: {
         tags: ['Auth'],
@@ -34,7 +34,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       })
 
       if (!userFromEmail) {
-        throw new BadRequestError('Invalid credentials.')
+        throw new BadRequestError('Credenciais inválidas.')
       }
 
       const isPasswordValid = await compare(
@@ -43,7 +43,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
       )
 
       if (!isPasswordValid) {
-        throw new BadRequestError('Invalid credentials.')
+        throw new BadRequestError('Credenciais inválidas.')
       }
 
       const token = await reply.jwtSign(

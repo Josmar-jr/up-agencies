@@ -21,11 +21,29 @@ model User {
   avatarUrl    String? @map("avatar_url")
   phone        String
 
+  token       Token[]
   invite      Invite[]
   member_on   Member[]
   owns_agency Agency[]
+  person      Person[]
+  quote       Quote[]
 
   @@map("users")
+}
+
+enum TokenType {
+  PASSWORD_RECOVER
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  type      TokenType
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  @@map("tokens")
 }
 
 enum Role {
@@ -40,8 +58,8 @@ model Invite {
   role      Role
   createdAt DateTime @default(now()) @map("created_at")
 
-  author User?   @relation(fields: [userId], references: [id])
-  userId String? @map("user_id")
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String? @map("user_id")
 
   agency   Agency @relation(fields: [agencyId], references: [id])
   agencyId String @map("agency_id")
@@ -54,11 +72,12 @@ model Invite {
 model Member {
   id String @id @default(uuid())
 
-  role     Role   @default(MEMBER)
-  agency   Agency @relation(fields: [agencyId], references: [id])
-  agencyId String @map("agency_id")
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String @map("user_id")
+  role           Role    @default(MEMBER)
+  agency         Agency  @relation(fields: [agencyId], references: [id])
+  agencyId       String  @map("agency_id")
+  user           User    @relation(fields: [userId], references: [id])
+  userId         String  @map("user_id")
+  quotesAssigned Quote[] @relation("QuoteAssignees")
 
   @@unique([agencyId, userId])
   @@map("members")
@@ -66,26 +85,29 @@ model Member {
 
 model Agency {
   id        String   @id @default(uuid())
-  addressId String?  @map("address_id")
   name      String
   email     String
-  site      String?
   cnpj      String   @unique
+  site      String?
   avatarUrl String?  @map("avatar_url")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  address AgencyAddress? @relation(fields: [addressId], references: [id])
-  userId  String         @map("user_id")
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?  @map("address_id")
+
+  owner   User   @relation(fields: [ownerId], references: [id])
+  ownerId String @map("owner_id")
 
   invites Invite[]
   members Member[]
-  User    User     @relation(fields: [userId], references: [id])
+  people  Person[]
+  quotes  Quote[]
 
   @@map("agencies")
 }
 
-model AgencyAddress {
+model Address {
   id           String   @id @default(uuid())
   cep          String
   state        String
@@ -98,6 +120,86 @@ model AgencyAddress {
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   agencies Agency[]
+  people   Person[]
 
-  @@map("agencies_address")
+  @@map("address")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model Person {
+  id        String  @id @default(uuid())
+  addressId String? @map("address_id")
+  agencyId  String  @map("agency_id")
+  authorId  String  @map("user_id")
+
+  name                           String
+  personType                     String?
+  birthday                       DateTime?
+  gender                         Gender?
+  ticketQuoteCount               Int       @default(0) @map("ticket_quote_count")
+  ticketQuoteApproved            Int       @default(0) @map("ticket_quote_approved")
+  document                       String?
+  phone                          String?
+  email                          String?
+  generalRegistration            String?   @map("general_registration")
+  generalRegistrationIssuingBody String?   @map("general_registration_issuing_body")
+  passport                       String?
+  passportIssuedAt               DateTime? @map("passport_issued_at")
+  passportExpiresIn              DateTime? @map("passport_expires_in")
+  visa                           String?
+  visaExpiresIn                  DateTime? @map("visa_expires_in")
+  observation                    String?
+  rate                           Int?
+
+  address Address? @relation(fields: [addressId], references: [id])
+  agency  Agency   @relation(fields: [agencyId], references: [id])
+  author  User     @relation(fields: [authorId], references: [id])
+  quotes  Quote[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([email, agencyId])
+  @@map("people")
+}
+
+enum QuoteStatus {
+  AWAITING
+  QUOTING
+  AWAITING_CLIENT
+  APPROVED
+  REJECTED
+}
+
+model Quote {
+  id      String      @id @default(uuid())
+  title   String
+  content String?
+  status  QuoteStatus @default(AWAITING)
+  order   Int         @default(0)
+
+  priceInCents Int @default(0) @map("price_in_cents")
+
+  salesChannel String? @map("sales_channel")
+  totalValue   Float   @default(0.0) @map("total_value")
+
+  assignees Member[] @relation("QuoteAssignees")
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
+
+  agency   Agency @relation(fields: [agencyId], references: [id])
+  agencyId String @map("agency_id")
+
+  client   Person? @relation(fields: [clientId], references: [id])
+  clientId String? @map("client_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("quotes")
 }

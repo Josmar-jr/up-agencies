@@ -8,7 +8,7 @@ import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 
 export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/users',
+    '/auth/sign-up',
     {
       schema: {
         tags: ['Auth'],
@@ -18,11 +18,18 @@ export async function createAccount(app: FastifyInstance) {
           email: z.string().email(),
           password: z.string().min(6),
           phone: z.string(),
+          agency: z.object({
+            name: z.string(),
+            email: z.string().email(),
+            cnpj: z.string(),
+            site: z.string().optional(),
+            avatarUrl: z.string(),
+          }),
         }),
       },
     },
     async (request, reply) => {
-      const { name, email, password, phone } = request.body
+      const { name, email, password, phone, agency } = request.body
 
       const userWithSameEmail = await prisma.user.findUnique({
         where: {
@@ -36,12 +43,29 @@ export async function createAccount(app: FastifyInstance) {
 
       const passwordHash = await hash(password, 6)
 
-      await prisma.user.create({
+      const user = await prisma.user.create({
         data: {
           name,
           email,
           passwordHash,
           phone,
+        },
+      })
+
+      await prisma.agency.create({
+        data: {
+          name: agency.name,
+          email: agency.email,
+          cnpj: agency.cnpj,
+          site: agency.site,
+          avatarUrl: agency.avatarUrl,
+          ownerId: user.id,
+          members: {
+            create: {
+              userId: user.id,
+              role: 'ADMIN',
+            },
+          },
         },
       })
 

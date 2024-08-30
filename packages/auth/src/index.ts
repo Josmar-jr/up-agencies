@@ -11,17 +11,21 @@ import { permissions } from './permissions'
 
 import { inviteSubject } from './subjects/invite'
 import { agencySubject } from './subjects/agency'
-
+import { peopleSubject } from './subjects/people'
 import { userSubject } from './subjects/user'
+import { quoteSubject } from './subjects/quote'
 
 export * from './models/agency'
+export * from './models/people'
 export * from './models/user'
 export * from './roles'
 
 const appAbilitiesSchema = z.union([
+  peopleSubject,
   userSubject,
   agencySubject,
   inviteSubject,
+  quoteSubject,
   z.tuple([z.literal('manage'), z.literal('all')]),
 ])
 
