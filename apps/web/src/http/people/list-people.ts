@@ -53,6 +53,9 @@ export async function getManyPeople(
   const result = await api
     .get('people', {
       searchParams: params,
+      next: {
+        tags: ['GET_MANY_PEOPLE'],
+      },
     })
     .json<GetManyPeopleResponse>()
 

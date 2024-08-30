@@ -11,6 +11,7 @@ import {
 
 import {
   Dialog,
+  DialogButtonClose,
   DialogClose,
   DialogContent,
   DialogDescription,
@@ -70,6 +71,10 @@ export function InviteMemberDialog({ children }: InviteMemberDialogProps) {
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const inputValueCleans = inputValue.trim()
     const emailAlreadyListed = emails.includes(inputValueCleans)
+
+    if (event.code === undefined) {
+      return
+    }
 
     if (
       keyboards.includes(event.code?.toUpperCase()) &&
@@ -261,9 +266,9 @@ export function InviteMemberDialog({ children }: InviteMemberDialogProps) {
           </div>
 
           <DialogFooter className="border-t px-4 py-3">
-            <DialogClose asChild>
+            <DialogButtonClose asChild>
               <Button variant="outline">Cancelar</Button>
-            </DialogClose>
+            </DialogButtonClose>
 
             <Button type="submit" disabled={isPending}>
               {isPending && <Loader className="mr-1 size-4 animate-spin" />}

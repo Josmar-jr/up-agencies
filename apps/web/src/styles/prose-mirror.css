@@ -1,0 +1,44 @@
+.editor .ProseMirror {
+  min-height: 100px;
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}
+
+.editor .ProseMirror h1 {
+  font-size: 1.875rem; 
+  line-height: 2.25rem; 
+}
+
+.editor .ProseMirror h2 {
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+}
+
+.editor .ProseMirror h3 {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+}
+
+.editor .ProseMirror h4 {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+}
+
+.editor .ProseMirror h5 {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+}
+
+.editor .ProseMirror ul {
+  list-style: outside;
+  padding-left: 12px;
+}
+
+.editor .ProseMirror ol {
+  list-style: decimal;
+  padding-left: 12px;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}

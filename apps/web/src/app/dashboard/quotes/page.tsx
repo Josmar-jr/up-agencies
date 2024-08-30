@@ -5,10 +5,20 @@ import {
 } from '@/components/ui/tooltip'
 import { Info } from 'lucide-react'
 import { QuotesBoard } from './quotes-board'
-import { getManyQuotes } from '@/http/quotes/list-quotes'
+import { getManyQuotes, GetManyQuotesParams } from '@/http/quotes/list-quotes'
 
-export default async function Quotes() {
-  const { quotes } = await getManyQuotes()
+export default async function Quotes({
+  searchParams,
+}: {
+  searchParams: GetManyQuotesParams
+}) {
+  const orderBy = searchParams.orderBy
+  const sortOrder = searchParams.sortOrder
+
+  const { quotes } = await getManyQuotes({
+    orderBy: orderBy,
+    sortOrder: sortOrder,
+  })
 
   return (
     <div className="min-h-screen w-full bg-white">

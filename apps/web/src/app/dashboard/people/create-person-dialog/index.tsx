@@ -60,8 +60,8 @@ export function CreatePersonDialog({ children }: CreatePersonDialogProps) {
 
   const [open, setOpen] = useState(false)
 
-  function handleCreateANewPerson(data: FormData) {
-    createANewPersonMutation.mutate(
+  async function handleCreateANewPerson(data: FormData) {
+    await createANewPersonMutation.mutateAsync(
       {
         name: data.personal.fullname,
         personType: data.personal.typePerson.map(
@@ -103,6 +103,7 @@ export function CreatePersonDialog({ children }: CreatePersonDialogProps) {
           queryClient.setQueryData(
             ['GET_MANY_PEOPLE'],
             (data: GetManyPeopleResponse) => {
+              console.log(data.people)
               return {
                 ...data,
                 people: [variables, ...data.people],

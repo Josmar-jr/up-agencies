@@ -65,7 +65,7 @@ export const SearchServerParams = () => {
         onChange={(e) => {
           setInputValue(e.target.value)
         }}
-        className="h-8 max-w-64 pr-8"
+        className="h-9 max-w-64 pr-8"
         placeholder="Pesquisar pessoas"
       />
 

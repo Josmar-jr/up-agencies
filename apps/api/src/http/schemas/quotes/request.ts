@@ -31,3 +31,8 @@ export const moveQuoteParamsSchema = z.object({
     'REJECTED',
   ]),
 })
+
+export const quotesQuerySchema = z.object({
+  orderBy: z.enum(['status', 'createdAt', 'assignees', 'title']).optional(),
+  sortOrder: z.enum(['asc', 'desc']).optional(),
+})

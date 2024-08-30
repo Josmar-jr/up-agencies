@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 import { quotesResponseSchema } from '@/http/schemas/quotes/response'
+import { quotesQuerySchema } from '@/http/schemas/quotes/request'
 
 export async function listQuotes(app: FastifyInstance) {
   app
@@ -16,6 +17,7 @@ export async function listQuotes(app: FastifyInstance) {
           tags: ['Quotes'],
           summary: 'Get all quotes',
           security: [{ bearerAuth: [] }],
+          querystring: quotesQuerySchema,
           response: {
             200: quotesResponseSchema,
           },
@@ -23,6 +25,12 @@ export async function listQuotes(app: FastifyInstance) {
       },
       async (request) => {
         const { agency } = await request.getUserMembership()
+        const { orderBy = 'status', sortOrder = 'asc' } = request.query
+
+        const validOrderFields = ['status', 'createdAt', 'assignees', 'title']
+        const orderField = validOrderFields.includes(orderBy)
+          ? orderBy
+          : 'status'
 
         const quotes = await prisma.quote.findMany({
           where: {
@@ -67,10 +75,7 @@ export async function listQuotes(app: FastifyInstance) {
           },
           orderBy: [
             {
-              status: 'asc', // Ordena os status alfabeticamente por padrão
-            },
-            {
-              order: 'asc', // Ordena pelo campo 'order' dentro de cada status
+              [orderField]: sortOrder,
             },
           ],
         })

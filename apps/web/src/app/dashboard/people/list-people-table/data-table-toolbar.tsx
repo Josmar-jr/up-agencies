@@ -41,7 +41,7 @@ export function DataTableToolbar<TData>({
         <DataTableViewOptions table={table} />
         <Separator orientation="vertical" className="mx-2" />
         <CreatePersonDialog>
-          <Button className="ml-auto h-8">
+          <Button className="ml-auto">
             <Plus className="mr-1.5 size-4" />
             Adicionar pessoa
           </Button>

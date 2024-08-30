@@ -37,7 +37,7 @@ const DialogClose = React.forwardRef<
     ref={ref}
     className={cn(
       'rounded-sm text-secondary-dark ring-offset-background transition-opacity focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground',
-      'grid size-8 place-content-center hover:bg-secondary-lighter',
+      'grid size-8 place-content-center outline-none hover:bg-secondary-lighter',
       className
     )}
     {...props}

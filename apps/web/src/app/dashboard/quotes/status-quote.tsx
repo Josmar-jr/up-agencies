@@ -14,6 +14,7 @@ import {
 import { listStatus, SelectStatus } from './data'
 import { useState } from 'react'
 import { contrast } from '@/utils/helpers'
+import { Circle } from 'lucide-react'
 
 export function StatusQuote() {
   const [open, setOpen] = useState(false)
@@ -28,13 +29,24 @@ export function StatusQuote() {
         <Button
           size="sm"
           variant="outline"
-          style={{
-            background: selectedStatus.color,
-            color: contrast(selectedStatus.color),
-          }}
-          className="h-7 justify-start px-2 text-xs text-zinc-600"
+          className="w-full items-center justify-start gap-2 border-transparent px-2 text-xs text-zinc-600"
         >
-          {selectedStatus.label}
+          <div
+            style={{
+              background: selectedStatus.color,
+              color: contrast(selectedStatus.color),
+            }}
+            className="flex h-7 items-center justify-center gap-1 rounded-md border border-input px-2"
+          >
+            {/* <Circle
+              style={{
+                fill: selectedStatus.color,
+                borderColor: selectedStatus.color,
+              }}
+              className="size-[14px] rounded-full border-[1.5px] text-transparent"
+            /> */}
+            {selectedStatus.label}
+          </div>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">
@@ -56,6 +68,13 @@ export function StatusQuote() {
                     setOpen(false)
                   }}
                 >
+                  <Circle
+                    style={{
+                      fill: status.color,
+                      borderColor: status.color,
+                    }}
+                    className="mr-2 size-[14px] rounded-full border-[1.5px] text-transparent"
+                  />
                   {status.label}
                 </CommandItem>
               ))}

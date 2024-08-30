@@ -34,11 +34,28 @@ export interface QuotesResponse {
   quotes: Quote[]
 }
 
-export async function getManyQuotes() {
+export type QuotesOrderBy = 'status' | 'createdAt' | 'assignees' | 'title'
+
+export interface GetManyQuotesParams {
+  orderBy?: QuotesOrderBy
+  sortOrder?: 'asc' | 'desc'
+}
+
+export async function getManyQuotes({
+  orderBy,
+  sortOrder,
+}: GetManyQuotesParams) {
   const result = await api
     .get('quotes', {
+      ...(orderBy &&
+        sortOrder && {
+          searchParams: {
+            orderBy,
+            sortOrder,
+          },
+        }),
       next: {
-        tags: ['quotes'],
+        tags: [`${orderBy}/quotes`],
       },
     })
     .json<QuotesResponse>()

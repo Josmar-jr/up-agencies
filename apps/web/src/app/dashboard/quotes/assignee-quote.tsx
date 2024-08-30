@@ -18,7 +18,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getManyMembers } from '@/http/members/list-members'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { getInitialsFromFullName } from '@/utils/formatters'
-import { Check, CircleX } from 'lucide-react'
+import { Check, CircleStop, CircleX, Plus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface SelectAssigne {
@@ -33,8 +33,9 @@ export function AssigneQuote() {
   const [selectedAssignes, setSelectedAssignes] = useState<SelectAssigne[]>([])
 
   const { data } = useQuery({
-    queryKey: ['TEST'],
+    queryKey: ['GET_MANY_MEMBERS'],
     queryFn: () => getManyMembers(),
+    enabled: open,
   })
 
   const handleSelect = (value: string) => {
@@ -68,11 +69,14 @@ export function AssigneQuote() {
         <Button
           size="sm"
           variant="outline"
-          className="h-7 justify-start px-2 text-xs text-zinc-600"
+          className="w-full items-center justify-start gap-2 border-transparent px-2 text-xs text-accents-4"
         >
-          {selectedAssignes?.map((selectedAssigne) => (
-            <>
-              <Avatar className="mr-1 size-5">
+          <div className="flex items-center -space-x-2">
+            {selectedAssignes?.map((selectedAssigne) => (
+              <Avatar
+                className="size-7 border border-white"
+                key={selectedAssigne.value}
+              >
                 <AvatarImage
                   src={selectedAssigne?.avatarUrl ?? undefined}
                   alt={selectedAssigne?.label ?? ''}
@@ -85,10 +89,9 @@ export function AssigneQuote() {
                     getInitialsFromFullName(selectedAssigne?.label)}
                 </AvatarFallback>
               </Avatar>
-            </>
-          ))}
-
-          {selectedAssignes.length === 0 && 'Responsável'}
+            ))}
+          </div>
+          {selectedAssignes.length === 0 && 'Vazio'}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0" align="start">

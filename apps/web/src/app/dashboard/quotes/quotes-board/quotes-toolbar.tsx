@@ -1,3 +1,4 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { CalendarDays, Plus } from 'lucide-react'
 import { CreateQuoteDialog } from '../create-quote-dialog'
@@ -9,11 +10,49 @@ import {
 import { cn } from '@/lib/utils'
 import { Calendar } from '@/components/ui/calendar'
 import dayjs from 'dayjs'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { startTransition, useCallback, useEffect, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { QuotesOrderBy } from '@/http/quotes/list-quotes'
 
 export function QuotesToolbar() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [orderBy, setOrderBy] = useState<QuotesOrderBy>('status')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+
+  const handleSortChange = useCallback(
+    (orderBy: QuotesOrderBy) => {
+      let params = new URLSearchParams(window.location.search)
+
+      params.set('orderBy', orderBy)
+      params.set('sortOrder', sortOrder)
+      startTransition(() => {
+        router.replace(`${pathname}?${params.toString()}`)
+      })
+    },
+    [router, pathname]
+  )
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+
+    const initialOrderBy = (params.get('orderBy') as QuotesOrderBy) ?? 'status'
+    const initialSortOrder =
+      (params.get('sortOrder') as 'asc' | 'desc') ?? 'asc'
+
+    setOrderBy(initialOrderBy)
+    setSortOrder(initialSortOrder)
+  }, [])
+
   return (
     <div className="flex w-full gap-2 border-b p-2">
-      <Popover>
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Button
             size="default"
@@ -40,11 +79,27 @@ export function QuotesToolbar() {
             initialFocus
           />
         </PopoverContent>
-      </Popover>
+      </Popover> */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm">Classificar</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start">
+          <DropdownMenuItem onSelect={() => handleSortChange('assignees')}>
+            Responsável
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => handleSortChange('title')}>
+            Título
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => handleSortChange('createdAt')}>
+            Data criada
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <div className="ml-auto flex">
         <CreateQuoteDialog>
-          <Button className="ml-auto h-8">
+          <Button className="ml-auto">
             <Plus className="mr-1.5 size-4" />
             Adicionar cotação
           </Button>

@@ -25,7 +25,7 @@ export function DataTableViewOptions<TData>({
         <Button
           variant="outline"
           size="sm"
-          className="group ml-auto size-8 p-0 lg:flex"
+          className="group ml-auto size-9 p-0 lg:flex"
         >
           <Settings className="size-4 transition-transform duration-500 group-hover:rotate-[135deg]" />
         </Button>

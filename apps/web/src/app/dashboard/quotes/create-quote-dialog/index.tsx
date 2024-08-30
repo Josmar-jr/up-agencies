@@ -22,6 +22,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { StatusQuote } from '../status-quote'
 import { AssigneQuote } from '../assignee-quote'
+import { GeneralInfo } from './general-info'
 
 interface CreatePersonDialogProps {
   children: ReactNode
@@ -31,27 +32,17 @@ export function CreateQuoteDialog({ children }: CreatePersonDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="top-[20%] translate-y-[0] data-[state=closed]:slide-out-to-top-[20%]">
-        <Tabs defaultValue="person">
+      <DialogContent className="max-w-3xl">
+        <Tabs defaultValue="general-info-quote">
           <TabsList className="h-14 px-6 *:h-10">
-            <TabsTrigger value="person">Cotação</TabsTrigger>
+            <TabsTrigger value="general-info-quote">Cotação</TabsTrigger>
+            <TabsTrigger value="fly">Voo</TabsTrigger>
           </TabsList>
-          <TabsContent className="px-8 py-2" value="person">
-            <Label>Nome</Label>
-            <Input className="mb-3" />
-
-            <div className="flex items-center gap-2">
-              <Text className="size-5" />
-              <Label className="text-base font-semibold">Descrição</Label>
-            </div>
-            <button className="mt-2 w-full rounded-sm bg-accents-3 p-2 pb-8 text-left text-sm">
-              Adicione um descrição mais detalhada...
-            </button>
-
-            <div className="space-x-1">
-              <StatusQuote />
-              <AssigneQuote />
-            </div>
+          <TabsContent className="mt-0" value="general-info-quote">
+            <GeneralInfo />
+          </TabsContent>
+          <TabsContent className="px-8 py-2" value="fly">
+            <div />
           </TabsContent>
         </Tabs>
 

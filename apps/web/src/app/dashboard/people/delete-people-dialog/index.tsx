@@ -30,7 +30,7 @@ export function DeletePeopleDialog({
 }: DeletePeopleDialogProps) {
   const [open, setOpen] = useState(false)
 
-  const [{ errors, message }, handleSubmit, isPending] = useFormState({
+  const [{ message }, handleSubmit, isPending] = useFormState({
     action: () => deletePeoplePermanently(listIds),
     onSuccess() {
       toast.success(
