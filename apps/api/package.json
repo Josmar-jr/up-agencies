@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "pnpm env:load tsx watch src/http/server.ts",
+    "build": "tsup src",
+    "start": "pnpm env:load tsx watch dist/http/server.ts",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:deploy": "pnpm env:load prisma migrate deploy",
     "db:studio": "pnpm env:load prisma studio",
@@ -24,6 +26,7 @@
     "fastify-plugin": "^4.5.1",
     "fastify-type-provider-zod": "^1.2.0",
     "resend": "^3.2.0",
+    "tsup": "^8.2.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
