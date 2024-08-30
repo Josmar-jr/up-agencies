@@ -100,6 +100,6 @@ app.register(createQuote)
 app.register(listQuotes)
 app.register(moveQuote)
 
-app.listen({ port: env.SERVER_PORT }).then(() => {
+app.listen({ port: env.SERVER_PORT ?? 8080 }).then(() => {
   console.log('HTTP server running! 🔥')
 })
